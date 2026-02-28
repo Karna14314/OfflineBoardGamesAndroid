@@ -1,0 +1,146 @@
+﻿> Task :ai:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ai:preBuild UP-TO-DATE
+> Task :ai:preDebugBuild UP-TO-DATE
+> Task :ai:generateDebugResValues UP-TO-DATE
+> Task :ai:generateDebugResources UP-TO-DATE
+> Task :ai:packageDebugResources UP-TO-DATE
+> Task :ai:parseDebugLocalResources UP-TO-DATE
+> Task :ai:generateDebugRFile UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:preBuild UP-TO-DATE
+> Task :core:preDebugBuild UP-TO-DATE
+> Task :core:generateDebugResValues UP-TO-DATE
+> Task :core:generateDebugResources UP-TO-DATE
+> Task :core:packageDebugResources UP-TO-DATE
+> Task :core:parseDebugLocalResources UP-TO-DATE
+> Task :core:generateDebugRFile UP-TO-DATE
+> Task :core:javaPreCompileDebug UP-TO-DATE
+> Task :ai:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ai:compileDebugLibraryResources UP-TO-DATE
+> Task :ai:writeDebugAarMetadata UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :core:writeDebugAarMetadata UP-TO-DATE
+> Task :engine:preBuild UP-TO-DATE
+> Task :engine:preDebugBuild UP-TO-DATE
+> Task :engine:writeDebugAarMetadata UP-TO-DATE
+> Task :games:preBuild UP-TO-DATE
+> Task :games:preDebugBuild UP-TO-DATE
+> Task :games:writeDebugAarMetadata UP-TO-DATE
+> Task :persistence:preBuild UP-TO-DATE
+> Task :persistence:preDebugBuild UP-TO-DATE
+> Task :persistence:writeDebugAarMetadata UP-TO-DATE
+> Task :ui:preBuild UP-TO-DATE
+> Task :ui:preDebugBuild UP-TO-DATE
+> Task :ui:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :engine:generateDebugResValues UP-TO-DATE
+> Task :engine:generateDebugResources UP-TO-DATE
+> Task :engine:packageDebugResources UP-TO-DATE
+> Task :games:generateDebugResValues UP-TO-DATE
+> Task :games:generateDebugResources UP-TO-DATE
+> Task :games:packageDebugResources UP-TO-DATE
+> Task :persistence:generateDebugResValues UP-TO-DATE
+> Task :persistence:generateDebugResources UP-TO-DATE
+> Task :persistence:packageDebugResources UP-TO-DATE
+> Task :ui:generateDebugResValues UP-TO-DATE
+> Task :ui:generateDebugResources UP-TO-DATE
+> Task :ui:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :ai:extractDeepLinksDebug UP-TO-DATE
+> Task :ai:processDebugManifest UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :core:extractDeepLinksDebug UP-TO-DATE
+> Task :core:processDebugManifest UP-TO-DATE
+> Task :engine:extractDeepLinksDebug UP-TO-DATE
+> Task :engine:processDebugManifest UP-TO-DATE
+> Task :games:extractDeepLinksDebug UP-TO-DATE
+> Task :games:processDebugManifest UP-TO-DATE
+> Task :persistence:extractDeepLinksDebug UP-TO-DATE
+> Task :persistence:processDebugManifest UP-TO-DATE
+> Task :ui:extractDeepLinksDebug UP-TO-DATE
+> Task :ui:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :core:compileDebugLibraryResources UP-TO-DATE
+> Task :engine:compileDebugLibraryResources UP-TO-DATE
+> Task :engine:parseDebugLocalResources UP-TO-DATE
+> Task :engine:generateDebugRFile UP-TO-DATE
+> Task :games:compileDebugLibraryResources UP-TO-DATE
+> Task :games:parseDebugLocalResources UP-TO-DATE
+> Task :games:generateDebugRFile UP-TO-DATE
+> Task :persistence:compileDebugLibraryResources UP-TO-DATE
+> Task :persistence:parseDebugLocalResources UP-TO-DATE
+> Task :persistence:generateDebugRFile UP-TO-DATE
+> Task :ui:compileDebugLibraryResources UP-TO-DATE
+> Task :ui:parseDebugLocalResources UP-TO-DATE
+> Task :ui:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :engine:javaPreCompileDebug UP-TO-DATE
+> Task :games:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :persistence:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :persistence:javaPreCompileDebug UP-TO-DATE
+> Task :games:javaPreCompileDebug UP-TO-DATE
+> Task :ui:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ui:javaPreCompileDebug UP-TO-DATE
+
+> Task :core:compileDebugKotlin FAILED
+.\gradlew.bat : e: file:///C:
+/Users/chait/Projects/Offline
+_games/core/src/main/java/com
+/offlinegames/core/Reducer.kt
+:55:46 No parameter with 
+name 'playerId' found.
+At line:1 char:1
++ .\gradlew.bat 
+compileDebugKotlin > 
+build_errs.txt 2>&1 ; cat 
+build_er ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (e: file  
+  :///C:/U...layerId' foun   
+ d.:String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+
+FAILURE: Build failed with 
+an exception.
+
+* What went wrong:
+Execution failed for task 
+':core:compileDebugKotlin'.
+> A failure occurred while 
+executing org.jetbrains.kotli
+n.compilerRunner.GradleCompil
+erRunnerWithWorkers$GradleKot
+linCompilerWorkAction
+   > Compilation error. See 
+log for more details
+
+* Try:
+> Run with --stacktrace 
+option to get the stack 
+trace.
+> Run with --info or --debug 
+option to get more log 
+output.
+> Run with --scan to get 
+full insights.
+> Get more help at 
+https://help.gradle.org.
+
+BUILD FAILED in 6s
+74 actionable tasks: 1 executed, 73 up-to-date

@@ -1,0 +1,135 @@
+﻿> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :ai:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ai:preBuild UP-TO-DATE
+> Task :ai:preDebugBuild UP-TO-DATE
+> Task :ai:generateDebugResValues UP-TO-DATE
+> Task :ai:generateDebugResources UP-TO-DATE
+> Task :ai:packageDebugResources UP-TO-DATE
+> Task :ai:parseDebugLocalResources UP-TO-DATE
+> Task :ai:generateDebugRFile UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:preBuild UP-TO-DATE
+> Task :core:preDebugBuild UP-TO-DATE
+> Task :core:generateDebugResValues UP-TO-DATE
+> Task :core:generateDebugResources UP-TO-DATE
+> Task :core:packageDebugResources UP-TO-DATE
+> Task :core:parseDebugLocalResources UP-TO-DATE
+> Task :core:generateDebugRFile UP-TO-DATE
+> Task :core:compileDebugKotlin UP-TO-DATE
+> Task :core:javaPreCompileDebug UP-TO-DATE
+> Task :core:compileDebugJavaWithJavac NO-SOURCE
+> Task :core:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :ai:compileDebugKotlin UP-TO-DATE
+> Task :ai:javaPreCompileDebug UP-TO-DATE
+> Task :ai:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ai:compileDebugLibraryResources UP-TO-DATE
+> Task :ai:writeDebugAarMetadata UP-TO-DATE
+> Task :core:writeDebugAarMetadata UP-TO-DATE
+> Task :engine:preBuild UP-TO-DATE
+> Task :engine:preDebugBuild UP-TO-DATE
+> Task :ai:bundleLibCompileToJarDebug
+> Task :engine:writeDebugAarMetadata UP-TO-DATE
+> Task :games:preBuild UP-TO-DATE
+> Task :games:preDebugBuild UP-TO-DATE
+> Task :games:writeDebugAarMetadata UP-TO-DATE
+> Task :persistence:preBuild UP-TO-DATE
+> Task :persistence:preDebugBuild UP-TO-DATE
+> Task :persistence:writeDebugAarMetadata UP-TO-DATE
+> Task :ui:preBuild UP-TO-DATE
+> Task :ui:preDebugBuild UP-TO-DATE
+> Task :ui:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :engine:generateDebugResValues UP-TO-DATE
+> Task :engine:generateDebugResources UP-TO-DATE
+> Task :engine:packageDebugResources UP-TO-DATE
+> Task :games:generateDebugResValues UP-TO-DATE
+> Task :games:generateDebugResources UP-TO-DATE
+> Task :games:packageDebugResources UP-TO-DATE
+> Task :persistence:generateDebugResValues UP-TO-DATE
+> Task :persistence:generateDebugResources UP-TO-DATE
+> Task :persistence:packageDebugResources UP-TO-DATE
+> Task :ui:generateDebugResValues UP-TO-DATE
+> Task :ui:generateDebugResources UP-TO-DATE
+> Task :ui:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :ai:extractDeepLinksDebug UP-TO-DATE
+> Task :ai:processDebugManifest UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :core:extractDeepLinksDebug UP-TO-DATE
+> Task :core:processDebugManifest UP-TO-DATE
+> Task :engine:extractDeepLinksDebug UP-TO-DATE
+> Task :engine:processDebugManifest UP-TO-DATE
+> Task :games:extractDeepLinksDebug UP-TO-DATE
+> Task :games:processDebugManifest UP-TO-DATE
+> Task :persistence:extractDeepLinksDebug UP-TO-DATE
+> Task :persistence:processDebugManifest UP-TO-DATE
+> Task :ui:extractDeepLinksDebug UP-TO-DATE
+> Task :ui:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :core:compileDebugLibraryResources UP-TO-DATE
+> Task :engine:compileDebugLibraryResources UP-TO-DATE
+> Task :engine:parseDebugLocalResources UP-TO-DATE
+> Task :engine:generateDebugRFile UP-TO-DATE
+> Task :games:compileDebugLibraryResources UP-TO-DATE
+> Task :games:parseDebugLocalResources UP-TO-DATE
+> Task :games:generateDebugRFile UP-TO-DATE
+> Task :persistence:compileDebugLibraryResources UP-TO-DATE
+> Task :persistence:parseDebugLocalResources UP-TO-DATE
+> Task :persistence:generateDebugRFile UP-TO-DATE
+> Task :ui:compileDebugLibraryResources UP-TO-DATE
+> Task :ui:parseDebugLocalResources UP-TO-DATE
+> Task :ui:generateDebugRFile UP-TO-DATE
+> Task :engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :engine:javaPreCompileDebug UP-TO-DATE
+> Task :games:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :persistence:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :persistence:javaPreCompileDebug
+> Task :ui:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :games:javaPreCompileDebug
+> Task :ui:javaPreCompileDebug
+> Task :app:javaPreCompileDebug
+> Task :ai:mergeDebugShaders
+> Task :ai:compileDebugShaders NO-SOURCE
+> Task :ai:generateDebugAssets UP-TO-DATE
+> Task :ai:packageDebugAssets
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :core:mergeDebugShaders
+> Task :core:compileDebugShaders NO-SOURCE
+> Task :core:generateDebugAssets UP-TO-DATE
+> Task :core:packageDebugAssets
+> Task :engine:mergeDebugShaders
+> Task :engine:compileDebugShaders NO-SOURCE
+> Task :engine:generateDebugAssets UP-TO-DATE
+> Task :engine:packageDebugAssets
+> Task :games:mergeDebugShaders
+> Task :games:compileDebugShaders NO-SOURCE
+> Task :games:generateDebugAssets UP-TO-DATE
+> Task :games:packageDebugAssets
+> Task :persistence:mergeDebugShaders
+> Task :persistence:compileDebugShaders NO-SOURCE
+> Task :persistence:generateDebugAssets UP-TO-DATE
+> Task :persistence:packageDebugAssets
+> Task :ui:mergeDebugShaders
+> Task :ui:compileDebugShaders NO-SOURCE
+> Task :ui:generateDebugAssets UP-TO-DATE
+> Task :ui:packageDebugAssets
+
+> Task :engine:compileDebugKotlin FAILED
+
+> Task :app:mergeDebugAssets
+> Task :app:processDebugResources FAILED
+> Task :persistence:compileDebugKotlin
+94 actionable tasks: 22 executed, 72 up-to-date
