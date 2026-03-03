@@ -64,15 +64,19 @@ class AdManager private constructor(private val context: Context, private val ad
     }
 
     init {
-        Log.d(TAG, "═══════════════════════════════════════════")
-        Log.d(TAG, "AdManager initializing...")
-        Log.d(TAG, "  Debug build: ${BuildConfig.DEBUG}")
-        Log.d(TAG, "  Real ad unit: $adUnitId")
-        Log.d(TAG, "  Effective ad unit: $effectiveAdUnitId")
-        Log.d(TAG, "═══════════════════════════════════════════")
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "═══════════════════════════════════════════")
+            Log.d(TAG, "AdManager initializing...")
+            Log.d(TAG, "  Debug build: ${BuildConfig.DEBUG}")
+            Log.d(TAG, "  Real ad unit: $adUnitId")
+            Log.d(TAG, "  Effective ad unit: $effectiveAdUnitId")
+            Log.d(TAG, "═══════════════════════════════════════════")
+        }
 
         MobileAds.initialize(context) { initStatus ->
-            Log.d(TAG, "MobileAds initialized: ${initStatus.adapterStatusMap}")
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "MobileAds initialized: ${initStatus.adapterStatusMap}")
+            }
             // Load the first ad after SDK initialization
             loadInterstitialAd()
         }
@@ -92,7 +96,9 @@ class AdManager private constructor(private val context: Context, private val ad
         }
 
         isLoading = true
-        Log.d(TAG, "Loading interstitial ad with unit: $effectiveAdUnitId")
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Loading interstitial ad with unit: $effectiveAdUnitId")
+        }
 
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
@@ -103,10 +109,12 @@ class AdManager private constructor(private val context: Context, private val ad
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     isLoading = false
                     Log.e(TAG, "══ Ad FAILED to load ══")
-                    Log.e(TAG, "  Error code: ${adError.code}")
-                    Log.e(TAG, "  Message: ${adError.message}")
-                    Log.e(TAG, "  Domain: ${adError.domain}")
-                    Log.e(TAG, "  Ad Unit ID used: $effectiveAdUnitId")
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "  Error code: ${adError.code}")
+                        Log.e(TAG, "  Message: ${adError.message}")
+                        Log.e(TAG, "  Domain: ${adError.domain}")
+                        Log.e(TAG, "  Ad Unit ID used: $effectiveAdUnitId")
+                    }
                     interstitialAd = null
                 }
 

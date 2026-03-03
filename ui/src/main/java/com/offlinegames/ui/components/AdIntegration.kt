@@ -34,10 +34,15 @@ class AdController {
             val companionClass = companion.javaClass
             
             // Get ad unit ID from BuildConfig
-            val buildConfigClass = Class.forName("com.offlinegames.BuildConfig")
+            val buildConfigClass = Class.forName("com.games.offlinegames.BuildConfig")
             val adUnitIdField = buildConfigClass.getField("ADMOB_INTERSTITIAL_AD_UNIT_ID")
             val adUnitId = adUnitIdField.get(null) as String
-            android.util.Log.d("AdIntegration", "showAdOnExit: adUnitId=$adUnitId")
+
+            val isDebugField = buildConfigClass.getField("DEBUG")
+            val isDebug = isDebugField.get(null) as Boolean
+            if (isDebug) {
+                android.util.Log.d("AdIntegration", "showAdOnExit: adUnitId=$adUnitId")
+            }
             
             // Get AdManager instance via companion.getInstance(context, adUnitId)
             val getInstanceMethod = companionClass.getMethod("getInstance", Context::class.java, String::class.java)
@@ -71,10 +76,15 @@ fun Activity.showAdBeforeExit(onComplete: () -> Unit) {
         val companionClass = companion.javaClass
         
         // Get ad unit ID from BuildConfig
-        val buildConfigClass = Class.forName("com.offlinegames.BuildConfig")
+        val buildConfigClass = Class.forName("com.games.offlinegames.BuildConfig")
         val adUnitIdField = buildConfigClass.getField("ADMOB_INTERSTITIAL_AD_UNIT_ID")
         val adUnitId = adUnitIdField.get(null) as String
-        android.util.Log.d("AdIntegration", "showAdBeforeExit: adUnitId=$adUnitId")
+
+        val isDebugField = buildConfigClass.getField("DEBUG")
+        val isDebug = isDebugField.get(null) as Boolean
+        if (isDebug) {
+            android.util.Log.d("AdIntegration", "showAdBeforeExit: adUnitId=$adUnitId")
+        }
         
         // Get AdManager instance
         val getInstanceMethod = companionClass.getMethod("getInstance", Context::class.java, String::class.java)
