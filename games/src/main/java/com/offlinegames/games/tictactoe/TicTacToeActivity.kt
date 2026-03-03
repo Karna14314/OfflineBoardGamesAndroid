@@ -2,9 +2,11 @@ package com.offlinegames.games.tictactoe
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.widget.FrameLayout
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -12,23 +14,18 @@ import com.offlinegames.ai.DifficultyProfile
 import com.offlinegames.core.GameEffect
 import com.offlinegames.core.GameIntent
 import com.offlinegames.engine.GameSurfaceView
+import com.offlinegames.ui.components.DistractionFreeGameScreen
+import com.offlinegames.ui.theme.OfflineGamesTheme
+import com.offlinegames.ui.components.showAdBeforeExit
 import kotlinx.coroutines.launch
 
 /**
- * Activity that hosts the TicTacToe game surface.
- *
- * Uses [AppCompatActivity] so we can inflate a plain [FrameLayout].
- * The game rendering is entirely done by [GameSurfaceView] +
- * [GameThread] — no Compose is involved in gameplay.
- *
- * Intent extras:
- * - [EXTRA_VS_AI]     : Boolean, default false
- * - [EXTRA_DIFFICULTY]: String (DifficultyProfile name), default "MEDIUM"
+ * Activity that hosts the TicTacToe game surface wrapped in DistractionFreeGameScreen.
  */
 class TicTacToeActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_VS_AI      = "vs_ai"
+        const val EXTRA_VS_AI      = "VS_AI"
         const val EXTRA_DIFFICULTY = "difficulty"
     }
 
@@ -62,12 +59,25 @@ class TicTacToeActivity : AppCompatActivity() {
             inputHandler  = inputHandler
         )
 
-        setContentView(FrameLayout(this).apply {
-            addView(surfaceView, FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            ))
-        })
+        setContent {
+            val state by viewModel.state.collectAsState()
+            val turnString = state.currentPlayer.name
+
+            OfflineGamesTheme {
+                DistractionFreeGameScreen(
+                    playerNameTurn = turnString,
+                    surfaceView = surfaceView,
+                    onRestart = { viewModel.dispatch(GameIntent.RestartGame) },
+                    onExit = { 
+                        showAdBeforeExit {
+                            finish()
+                        }
+                    },
+                    soundEnabled = true, // Hook to real settings later
+                    onToggleSound = { /* Hook to settings */ }
+                )
+            }
+        }
 
         observeState()
         observeEffects()
@@ -113,7 +123,9 @@ class TicTacToeActivity : AppCompatActivity() {
                 viewModel.dispatch(GameIntent.RestartGame)
             }
             .setNegativeButton("Exit") { _, _ ->
-                finish()
+                showAdBeforeExit {
+                    finish()
+                }
             }
             .setCancelable(false)
             .show()

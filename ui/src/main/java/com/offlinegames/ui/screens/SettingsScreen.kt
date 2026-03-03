@@ -40,14 +40,19 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text("Settings", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    titleContentColor = MaterialTheme.colorScheme.onBackground
+                )
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         Column(
             modifier = Modifier
@@ -55,90 +60,115 @@ fun SettingsScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(0.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            SectionHeader("Audio & Haptics")
-
-            ToggleRow(label = "Sound Effects", checked = soundEnabled) {
-                viewModel.setSoundEnabled(it)
-            }
-            ToggleRow(label = "Haptic Feedback", checked = hapticsEnabled) {
-                viewModel.setHapticsEnabled(it)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            SectionHeader("Appearance")
-
-            ToggleRow(label = "Dark Theme", checked = darkTheme) {
-                viewModel.setDarkTheme(it)
+            
+            SettingsCard {
+                SectionHeader("Audio & Haptics")
+                ToggleRow(label = "Sound Effects", checked = soundEnabled) { viewModel.setSoundEnabled(it) }
+                HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                ToggleRow(label = "Haptic Feedback", checked = hapticsEnabled) { viewModel.setHapticsEnabled(it) }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-            SectionHeader("Player Profiles")
+            SettingsCard {
+                SectionHeader("Appearance")
+                ToggleRow(label = "Dark Theme", checked = darkTheme) { viewModel.setDarkTheme(it) }
+            }
 
-            OutlinedTextField(
-                value = p1Input,
-                onValueChange = { p1Input = it },
-                label = { Text("Player 1 Name") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                trailingIcon = {
-                    if (p1Input != p1Name) {
-                        TextButton(onClick = { viewModel.setPlayerOneName(p1Input) }) {
-                            Text("Save")
-                        }
-                    }
-                }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = p2Input,
-                onValueChange = { p2Input = it },
-                label = { Text("Player 2 / CPU Name") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                trailingIcon = {
-                    if (p2Input != p2Name) {
-                        TextButton(onClick = { viewModel.setPlayerTwoName(p2Input) }) {
-                            Text("Save")
-                        }
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-            SectionHeader("AI Difficulty")
-
-            ExposedDropdownMenuBox(
-                expanded = diffExpanded,
-                onExpandedChange = { diffExpanded = !diffExpanded }
-            ) {
+            SettingsCard {
+                SectionHeader("Player Profiles")
                 OutlinedTextField(
-                    value = aiDifficulty,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Difficulty") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = diffExpanded) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                )
-                ExposedDropdownMenu(
-                    expanded = diffExpanded,
-                    onDismissRequest = { diffExpanded = false }
-                ) {
-                    difficultyOptions.forEach { option ->
-                        DropdownMenuItem(
-                            text = { Text(option) },
-                            onClick = {
-                                viewModel.setAiDifficulty(option)
-                                diffExpanded = false
+                    value = p1Input,
+                    onValueChange = { p1Input = it },
+                    label = { Text("Player 1 Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                    ),
+                    trailingIcon = {
+                        if (p1Input != p1Name) {
+                            TextButton(onClick = { viewModel.setPlayerOneName(p1Input) }) {
+                                Text("Save", fontWeight = FontWeight.Bold)
                             }
+                        }
+                    }
+                )
+                
+                OutlinedTextField(
+                    value = p2Input,
+                    onValueChange = { p2Input = it },
+                    label = { Text("Player 2 / CPU Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                    ),
+                    trailingIcon = {
+                        if (p2Input != p2Name) {
+                            TextButton(onClick = { viewModel.setPlayerTwoName(p2Input) }) {
+                                Text("Save", fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                )
+            }
+
+            SettingsCard {
+                SectionHeader("AI Difficulty")
+                ExposedDropdownMenuBox(
+                    expanded = diffExpanded,
+                    onExpandedChange = { diffExpanded = !diffExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = aiDifficulty,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Selected Difficulty") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = diffExpanded) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                         )
+                    )
+                    ExposedDropdownMenu(
+                        expanded = diffExpanded,
+                        onDismissRequest = { diffExpanded = false }
+                    ) {
+                        difficultyOptions.forEach { option ->
+                            DropdownMenuItem(
+                                text = { Text(option, style = MaterialTheme.typography.bodyLarge) },
+                                onClick = {
+                                    viewModel.setAiDifficulty(option)
+                                    diffExpanded = false
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SettingsCard(content: @Composable ColumnScope.() -> Unit) {
+    Card(
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            content = content
+        )
     }
 }
 

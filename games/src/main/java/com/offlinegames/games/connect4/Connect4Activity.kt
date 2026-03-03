@@ -13,6 +13,7 @@ import com.offlinegames.core.GameEffect
 import com.offlinegames.core.GameIntent
 import com.offlinegames.core.GameResult
 import com.offlinegames.engine.GameSurfaceView
+import com.offlinegames.ui.components.showAdBeforeExit
 import kotlinx.coroutines.launch
 
 /**
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 class Connect4Activity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_VS_AI = "vs_ai"
+        const val EXTRA_VS_AI = "VS_AI"
         const val EXTRA_DIFFICULTY = "difficulty"
     }
 
@@ -108,9 +109,17 @@ class Connect4Activity : AppCompatActivity() {
                 viewModel.dispatch(GameIntent.RestartGame)
             }
             .setNegativeButton("Exit") { _, _ ->
-                finish()
+                showAdBeforeExit {
+                    finish()
+                }
             }
             .setCancelable(false)
             .show()
+    }
+
+    override fun onBackPressed() {
+        showAdBeforeExit {
+            super.onBackPressed()
+        }
     }
 }

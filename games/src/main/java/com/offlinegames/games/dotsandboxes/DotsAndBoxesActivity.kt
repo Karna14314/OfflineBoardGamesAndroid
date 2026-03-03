@@ -12,6 +12,7 @@ import com.offlinegames.core.GameEffect
 import com.offlinegames.core.GameIntent
 import com.offlinegames.core.GameResult
 import com.offlinegames.engine.GameSurfaceView
+import com.offlinegames.ui.components.showAdBeforeExit
 import kotlinx.coroutines.launch
 
 /**
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 class DotsAndBoxesActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_VS_AI = "vs_ai"
+        const val EXTRA_VS_AI = "VS_AI"
     }
 
     private val vsAi by lazy { intent.getBooleanExtra(EXTRA_VS_AI, false) }
@@ -101,9 +102,17 @@ class DotsAndBoxesActivity : AppCompatActivity() {
                 viewModel.dispatch(GameIntent.RestartGame)
             }
             .setNegativeButton("Exit") { _, _ ->
-                finish()
+                showAdBeforeExit {
+                    finish()
+                }
             }
             .setCancelable(false)
             .show()
+    }
+
+    override fun onBackPressed() {
+        showAdBeforeExit {
+            super.onBackPressed()
+        }
     }
 }

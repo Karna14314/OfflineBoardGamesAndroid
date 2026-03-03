@@ -29,6 +29,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":engine"))
     implementation(project(":persistence"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

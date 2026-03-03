@@ -7,7 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import com.offlinegames.ui.navigation.AppNavigation
 import com.offlinegames.ui.theme.OfflineGamesTheme
 import com.offlinegames.persistence.PreferencesRepository
-
+import com.offlinegames.ads.AdManager
+import com.games.offlinegames.BuildConfig
 /**
  * Single-activity host for the entire app.
  * All navigation is managed by the UI module via Compose NavHost.
@@ -19,12 +20,21 @@ class MainActivity : ComponentActivity() {
         PreferencesRepository(applicationContext)
     }
 
+    private val adManager by lazy {
+        AdManager.getInstance(applicationContext, BuildConfig.ADMOB_INTERSTITIAL_AD_UNIT_ID)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             OfflineGamesTheme {
-                AppNavigation(preferencesRepository = preferencesRepository)
+                AppNavigation(
+                    preferencesRepository = preferencesRepository,
+                    adManager = adManager,
+                    activity = this
+                )
             }
         }
     }

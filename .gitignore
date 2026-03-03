@@ -23,3 +23,8 @@ persistence/build/
 ui/build/
 games/build/
 */build/
+
+# Keystore files
+*.jks
+*.keystore
+app/offlinegames.jks
