@@ -82,10 +82,26 @@ class SOSRules : GameRules<GridBoard> {
      *
      * An SOS is: S-O-S in a line of 3 consecutive cells.
      * The placed piece can be at any of the three positions.
+     *
+     * Optional overrides allow checking for SOS patterns without creating new GridBoard instances.
      */
-    fun countNewSOS(board: GridBoard, row: Int, col: Int): Int {
-        val placed = board.get(row, col)
+    fun countNewSOS(
+        board: GridBoard,
+        row: Int,
+        col: Int,
+        pieceOverride: Int? = null,
+        otherRow: Int = -1,
+        otherCol: Int = -1,
+        otherPiece: Int = 0
+    ): Int {
+        val placed = pieceOverride ?: board.get(row, col)
         var count = 0
+
+        fun getPiece(r: Int, c: Int): Int {
+            if (r == row && c == col && pieceOverride != null) return pieceOverride
+            if (r == otherRow && c == otherCol) return otherPiece
+            return board.get(r, c)
+        }
 
         when (placed) {
             PIECE_S -> {
@@ -97,7 +113,7 @@ class SOSRules : GameRules<GridBoard> {
                     val ec = col + 2 * dir[1]
                     if (mr in 0 until SIZE && mc in 0 until SIZE &&
                         er in 0 until SIZE && ec in 0 until SIZE) {
-                        if (board.get(mr, mc) == PIECE_O && board.get(er, ec) == PIECE_S) {
+                        if (getPiece(mr, mc) == PIECE_O && getPiece(er, ec) == PIECE_S) {
                             count++
                         }
                     }
@@ -112,7 +128,7 @@ class SOSRules : GameRules<GridBoard> {
                     val ec = col + fwd[1]
                     if (sr in 0 until SIZE && sc in 0 until SIZE &&
                         er in 0 until SIZE && ec in 0 until SIZE) {
-                        if (board.get(sr, sc) == PIECE_S && board.get(er, ec) == PIECE_S) {
+                        if (getPiece(sr, sc) == PIECE_S && getPiece(er, ec) == PIECE_S) {
                             count++
                         }
                     }
