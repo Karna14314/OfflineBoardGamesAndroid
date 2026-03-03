@@ -141,7 +141,8 @@ data class Game2048State(
     val gameState: GameState,
     val showResultDialog: Boolean = false,
     val undoStack: List<Game2048Snapshot> = emptyList(),
-    val maxUndoDepth: Int = 1  // 2048 allows only 1 undo
+    val maxUndoDepth: Int = 1,  // 2048 allows only 1 undo
+    val bestScore: Int = 0
 ) {
     val board: Game2048Board get() = gameState.boardData as Game2048Board
     val currentScore: Int get() = board.score

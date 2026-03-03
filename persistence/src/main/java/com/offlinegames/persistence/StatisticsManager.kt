@@ -33,6 +33,9 @@ class StatisticsManager(private val context: Context) {
     private fun gamesPlayedKey(gameId: String) =
         intPreferencesKey("${gameId}_played")
 
+    private fun highScoreKey(gameId: String) =
+        intPreferencesKey("${gameId}_high_score")
+
     // -- Public API ----------------------------------------------------------
 
     fun getWins(gameId: String, playerId: Int): Flow<Int> = context.statsDataStore.data
@@ -46,6 +49,9 @@ class StatisticsManager(private val context: Context) {
 
     fun getGamesPlayed(gameId: String): Flow<Int> = context.statsDataStore.data
         .map { prefs -> prefs[gamesPlayedKey(gameId)] ?: 0 }
+
+    fun getHighScore(gameId: String): Flow<Int> = context.statsDataStore.data
+        .map { prefs -> prefs[highScoreKey(gameId)] ?: 0 }
 
     /** Record a win for [winnerPlayerId] in [gameId]. */
     suspend fun recordWin(gameId: String, winnerPlayerId: Int) {
@@ -67,6 +73,17 @@ class StatisticsManager(private val context: Context) {
         }
     }
 
+    /** Update the high score for [gameId] if [score] is higher than the current high score. */
+    suspend fun updateHighScore(gameId: String, score: Int) {
+        context.statsDataStore.edit { prefs ->
+            val key = highScoreKey(gameId)
+            val currentHigh = prefs[key] ?: 0
+            if (score > currentHigh) {
+                prefs[key] = score
+            }
+        }
+    }
+
     /** Wipe all stats for [gameId] (useful for testing or reset). */
     suspend fun clearStats(gameId: String) {
         context.statsDataStore.edit { prefs ->
@@ -76,6 +93,7 @@ class StatisticsManager(private val context: Context) {
             }
             prefs.remove(drawsKey(gameId))
             prefs.remove(gamesPlayedKey(gameId))
+            prefs.remove(highScoreKey(gameId))
         }
     }
 }

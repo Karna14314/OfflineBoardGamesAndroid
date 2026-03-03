@@ -215,7 +215,7 @@ private fun Game2048Screen(
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Best", style = MaterialTheme.typography.labelMedium)
                         Text(
-                            "${state.currentScore}", // TODO: Track best score
+                            "${state.bestScore}",
                             style = MaterialTheme.typography.headlineMedium
                         )
                     }
