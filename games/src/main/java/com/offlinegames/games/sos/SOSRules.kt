@@ -186,8 +186,8 @@ class SOSRules : GameRules<GridBoard> {
         val p1Score = scores[1] ?: 0
         val p2Score = scores[2] ?: 0
         return when {
-            p1Score > p2Score -> state.players.find { it.id == 1 }
-            p2Score > p1Score -> state.players.find { it.id == 2 }
+            p1Score > p2Score -> state.players[0]
+            p2Score > p1Score -> state.players[1]
             else -> null
         }
     }
