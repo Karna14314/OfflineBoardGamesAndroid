@@ -2,7 +2,6 @@ package com.offlinegames.games.airhockey
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
