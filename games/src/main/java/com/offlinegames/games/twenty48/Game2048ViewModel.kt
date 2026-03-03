@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.offlinegames.core.*
 import com.offlinegames.engine.HapticController
 import com.offlinegames.persistence.SaveManager
+import com.offlinegames.persistence.StatisticsManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
  */
 class Game2048ViewModel(
     private val hapticController: HapticController,
-    private val saveManager: SaveManager
+    private val saveManager: SaveManager,
+    private val statisticsManager: StatisticsManager
 ) : ViewModel() {
 
     private val reducer = Game2048Reducer()
@@ -41,6 +43,13 @@ class Game2048ViewModel(
     private var previousBoard: Game2048Board? = null
 
     init {
+        // Load high score
+        viewModelScope.launch {
+            statisticsManager.getHighScore(SAVE_KEY_2048).collect { highScore ->
+                _state.update { it.copy(bestScore = highScore) }
+            }
+        }
+
         // Load saved game if exists
         viewModelScope.launch {
             val gameId = _state.value.gameState.gameId
@@ -62,14 +71,23 @@ class Game2048ViewModel(
             previousBoard = currentState.board.copy()
 
             val (newState, effects) = reducer.reduce(currentState, action)
-            _state.value = newState
+
+            // Track best score
+            val updatedState = if (newState.currentScore > newState.bestScore) {
+                statisticsManager.updateHighScore(SAVE_KEY_2048, newState.currentScore)
+                newState.copy(bestScore = newState.currentScore)
+            } else {
+                newState
+            }
+
+            _state.value = updatedState
 
             effects.forEach { _effects.tryEmit(it) }
             dispatchEffects(effects)
 
             // Autosave after each move
             if (action is GameAction.MergeTilesAction) {
-                saveGame(newState)
+                saveGame(updatedState)
             }
         }
     }
@@ -78,12 +96,21 @@ class Game2048ViewModel(
     fun dispatch(intent: GameIntent) {
         viewModelScope.launch {
             val (newState, effects) = reducer.reduce(_state.value, intent)
-            _state.value = newState
+
+            // Track best score
+            val updatedState = if (newState.currentScore > newState.bestScore) {
+                statisticsManager.updateHighScore(SAVE_KEY_2048, newState.currentScore)
+                newState.copy(bestScore = newState.currentScore)
+            } else {
+                newState
+            }
+
+            _state.value = updatedState
             effects.forEach { _effects.tryEmit(it) }
             dispatchEffects(effects)
 
             if (intent is GameIntent.SaveAndExit) {
-                saveGame(newState)
+                saveGame(updatedState)
             }
         }
     }
@@ -122,7 +149,8 @@ class Game2048ViewModelFactory(
         @Suppress("UNCHECKED_CAST")
         return Game2048ViewModel(
             hapticController = HapticController(context),
-            saveManager = SaveManager(context)
+            saveManager = SaveManager(context),
+            statisticsManager = StatisticsManager(context)
         ) as T
     }
 }
