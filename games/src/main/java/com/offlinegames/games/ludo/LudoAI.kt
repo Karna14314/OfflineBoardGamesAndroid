@@ -47,10 +47,11 @@ class LudoAI {
         }
 
         // Priority 3: Move the most advanced on-track token
-        val onTrack = movable.filter { it.isOnTrack || it.isInHomeColumn }
-            .sortedByDescending { it.step }
-        if (onTrack.isNotEmpty()) {
-            return createMoveAction(onTrack.first(), playerId, diceValue)
+        val bestOnTrack = movable
+            .filter { it.isOnTrack || it.isInHomeColumn }
+            .maxByOrNull { it.step }
+        if (bestOnTrack != null) {
+            return createMoveAction(bestOnTrack, playerId, diceValue)
         }
 
         // Priority 4: Enter from base (should only happen on 6)
