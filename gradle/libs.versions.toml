@@ -1,4 +1,7 @@
 [versions]
+mockk = "1.13.8"
+kotlinxCoroutinesTest = "1.7.3"
+securityCrypto = "1.1.0-alpha06"
 agp = "8.7.3"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
@@ -14,6 +17,9 @@ navigationCompose = "2.8.5"
 playServicesAds = "23.6.0"
 
 [libraries]
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
