@@ -30,6 +30,9 @@ class GameThread(
     /** Target interval between frames (≈ 16.67 ms for 60 FPS). */
     private val targetFrameMillis: Long = 1000L / 60L
 
+    /** Cached background color to avoid parsing per frame */
+    private val bgColor = android.graphics.Color.parseColor("#1A1A2E")
+
     /** Signals the loop to keep running. */
     private val running = AtomicBoolean(false)
 
@@ -88,7 +91,8 @@ class GameThread(
             val deltaSeconds = cappedNanos / 1_000_000_000f
 
             // Notify tick listeners (physics, animation, etc.)
-            for (listener in tickListeners) {
+            for (i in 0 until tickListeners.size) {
+                val listener = tickListeners[i]
                 listener.onTick(deltaSeconds)
             }
 
@@ -106,7 +110,7 @@ class GameThread(
 
             try {
                 synchronized(holder) {
-                    canvas.drawColor(android.graphics.Color.parseColor("#1A1A2E")) // dark bg
+                    canvas.drawColor(bgColor) // dark bg
                     boardRenderer.drawBoard(canvas, state)
                     pieceRenderer.drawPieces(canvas, state)
                 }
