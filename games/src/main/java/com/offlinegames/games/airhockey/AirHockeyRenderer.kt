@@ -105,6 +105,17 @@ class AirHockeyRenderer(
     // Reusable rect for efficiency
     private val tempRect = RectF()
 
+    // Cached table geometry
+    private var lastCanvasWidth: Float = -1f
+    private var lastCanvasHeight: Float = -1f
+    private var cachedTableLeft: Float = 0f
+    private var cachedTableTop: Float = 0f
+    private var cachedTableWidth: Float = 0f
+    private var cachedTableHeight: Float = 0f
+
+    // Pre-allocated score strings
+    private val scoreStrings = Array(100) { it.toString() }
+
     // Goal animation state
     @Volatile
     var goalFlashAlpha: Float = 0f
@@ -112,7 +123,11 @@ class AirHockeyRenderer(
     // ── BoardRenderer ───────────────────────────────────────────────────
 
     override fun drawBoard(canvas: Canvas, state: GameState) {
-        val (tableLeft, tableTop, tableW, tableH) = tableGeometry(canvas)
+        updateTableGeometry(canvas)
+        val tableLeft = cachedTableLeft
+        val tableTop = cachedTableTop
+        val tableW = cachedTableWidth
+        val tableH = cachedTableHeight
 
         // Table background
         tempRect.set(tableLeft, tableTop, tableLeft + tableW, tableTop + tableH)
@@ -146,7 +161,11 @@ class AirHockeyRenderer(
     // ── PieceRenderer ───────────────────────────────────────────────────
 
     override fun drawPieces(canvas: Canvas, state: GameState) {
-        val (tableLeft, tableTop, tableW, tableH) = tableGeometry(canvas)
+        updateTableGeometry(canvas)
+        val tableLeft = cachedTableLeft
+        val tableTop = cachedTableTop
+        val tableW = cachedTableWidth
+        val tableH = cachedTableHeight
 
         // Draw puck
         val puckX = tableLeft + physicsWorld.puck.x * tableW
@@ -188,15 +207,19 @@ class AirHockeyRenderer(
         canvas.drawCircle(px, py, pr * 0.5f, paddleInnerPaint)
     }
 
+    private fun getScoreString(score: Int): String {
+        return if (score in 0..99) scoreStrings[score] else score.toString()
+    }
+
     private fun drawScores(canvas: Canvas, tableLeft: Float, tableTop: Float, tableW: Float, tableH: Float) {
         val centerX = tableLeft + tableW / 2f
 
         // Player 2 score (top half)
         scorePaint.textSize = tableW * 0.12f
-        canvas.drawText("${physicsWorld.score2}", centerX, tableTop + tableH * 0.25f, scorePaint)
+        canvas.drawText(getScoreString(physicsWorld.score2), centerX, tableTop + tableH * 0.25f, scorePaint)
 
         // Player 1 score (bottom half)
-        canvas.drawText("${physicsWorld.score1}", centerX, tableTop + tableH * 0.78f, scorePaint)
+        canvas.drawText(getScoreString(physicsWorld.score1), centerX, tableTop + tableH * 0.78f, scorePaint)
 
         // Labels
         labelPaint.textSize = tableW * 0.045f
@@ -206,19 +229,20 @@ class AirHockeyRenderer(
 
     // ── Geometry ─────────────────────────────────────────────────────────
 
-    data class TableGeometry(val left: Float, val top: Float, val width: Float, val height: Float)
-
-    fun tableGeometry(canvas: Canvas): TableGeometry {
+    private fun updateTableGeometry(canvas: Canvas) {
         val cw = canvas.width.toFloat()
         val ch = canvas.height.toFloat()
 
-        val margin = 24f
-        val tableW = cw - margin * 2
-        val tableH = minOf(ch - margin * 2, tableW * 1.6f) // Tall table ratio
-        val tableLeft = margin
-        val tableTop = (ch - tableH) / 2f
+        if (cw == lastCanvasWidth && ch == lastCanvasHeight) return
 
-        return TableGeometry(tableLeft, tableTop, tableW, tableH)
+        lastCanvasWidth = cw
+        lastCanvasHeight = ch
+
+        val margin = 24f
+        cachedTableWidth = cw - margin * 2
+        cachedTableHeight = minOf(ch - margin * 2, cachedTableWidth * 1.6f) // Tall table ratio
+        cachedTableLeft = margin
+        cachedTableTop = (ch - cachedTableHeight) / 2f
     }
 
     /**
