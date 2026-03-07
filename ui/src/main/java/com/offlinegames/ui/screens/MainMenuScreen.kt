@@ -3,9 +3,12 @@ package com.offlinegames.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -196,9 +199,10 @@ private fun ResumeLastGameCard(gameName: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .border(width = 1.dp, color = colors.secondary.copy(alpha = 0.8f), shape = RoundedCornerShape(8.dp))
             .clickable(onClick = onClick)
             .clip(RoundedCornerShape(8.dp)),
-        colors = CardDefaults.cardColors(containerColor = colors.primaryContainer)
+        colors = CardDefaults.cardColors(containerColor = colors.primaryContainer.copy(alpha = 0.5f))
     ) {
         Row(
             modifier = Modifier
@@ -252,10 +256,11 @@ private fun GameCategorySection(
         )
         
         // Horizontal list for categorized games to avoid a messy single grid
-        LazyRow(
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(spacing.medium)
         ) {
-            items(games) { game ->
+            games.forEach { game ->
                 GameCardBadge(game, onClick = { onGameSelected(game.id) })
             }
         }
@@ -271,9 +276,10 @@ private fun GameCardBadge(game: GameEntry, onClick: () -> Unit) {
         modifier = Modifier
             .width(140.dp)
             .height(100.dp)
+            .border(width = 1.dp, color = colors.primary.copy(alpha = 0.8f), shape = RoundedCornerShape(8.dp))
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = colors.surface)
+        colors = CardDefaults.cardColors(containerColor = colors.surface.copy(alpha = 0.5f))
     ) {
         Column(
             modifier = Modifier
