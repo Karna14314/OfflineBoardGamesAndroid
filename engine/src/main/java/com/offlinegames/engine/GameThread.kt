@@ -80,12 +80,11 @@ class GameThread(
 
     override fun run() {
         while (running.get()) {
-            val frameStart = System.currentTimeMillis()
+            val frameStartNanos = System.nanoTime()
 
             // Calculate delta time
-            val now = System.nanoTime()
-            val deltaNanos = now - lastFrameNanos
-            lastFrameNanos = now
+            val deltaNanos = frameStartNanos - lastFrameNanos
+            lastFrameNanos = frameStartNanos
             // Cap to 3 frames to prevent spiral of death
             val cappedNanos = deltaNanos.coerceAtMost((targetFrameMillis * 3) * 1_000_000L)
             val deltaSeconds = cappedNanos / 1_000_000_000f
@@ -98,13 +97,13 @@ class GameThread(
 
             val state = latestState.get()
             if (state == null) {
-                sleepForRemainder(frameStart)
+                sleepForRemainder(frameStartNanos)
                 continue
             }
 
             val canvas = holder.lockCanvas()
             if (canvas == null) {
-                sleepForRemainder(frameStart)
+                sleepForRemainder(frameStartNanos)
                 continue
             }
 
@@ -118,16 +117,18 @@ class GameThread(
                 holder.unlockCanvasAndPost(canvas)
             }
 
-            sleepForRemainder(frameStart)
+            sleepForRemainder(frameStartNanos)
         }
     }
 
-    private fun sleepForRemainder(frameStart: Long) {
-        val elapsed = System.currentTimeMillis() - frameStart
-        val remaining = targetFrameMillis - elapsed
-        if (remaining > 0) {
+    private fun sleepForRemainder(frameStartNanos: Long) {
+        val elapsedNanos = System.nanoTime() - frameStartNanos
+        val remainingNanos = (targetFrameMillis * 1_000_000L) - elapsedNanos
+        if (remainingNanos > 0) {
             try {
-                sleep(remaining)
+                val remainingMillis = remainingNanos / 1_000_000L
+                val remainingNanosPart = (remainingNanos % 1_000_000L).toInt()
+                sleep(remainingMillis, remainingNanosPart)
             } catch (_: InterruptedException) {
                 interrupt()
             }

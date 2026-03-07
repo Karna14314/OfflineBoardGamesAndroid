@@ -83,11 +83,12 @@ object CollisionResolver {
     fun resolvePaddle(puck: Puck, paddle: Paddle, dt: Float) {
         val dx = puck.x - paddle.x
         val dy = puck.y - paddle.y
-        val dist = sqrt(dx * dx + dy * dy)
+        val distSq = dx * dx + dy * dy
         val minDist = puck.radius + paddle.radius
 
-        if (dist >= minDist || dist < 0.0001f) return
+        if (distSq >= minDist * minDist || distSq < 0.00000001f) return
 
+        val dist = sqrt(distSq)
         // Normalise collision vector
         val nx = dx / dist
         val ny = dy / dist
