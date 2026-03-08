@@ -23,6 +23,7 @@ class TicTacToeRenderer : BoardRenderer, PieceRenderer {
         strokeWidth = 6f
         style  = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#7C83FD"))
     }
 
     private val xPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -30,12 +31,14 @@ class TicTacToeRenderer : BoardRenderer, PieceRenderer {
         strokeWidth = 14f
         style  = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#FF6B6B"))
     }
 
     private val oPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color  = Color.parseColor("#96FEFF")
         strokeWidth = 12f
         style  = Paint.Style.STROKE
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#96FEFF"))
     }
 
     private val statusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
