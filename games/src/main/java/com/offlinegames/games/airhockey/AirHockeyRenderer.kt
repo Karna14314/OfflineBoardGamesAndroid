@@ -29,52 +29,68 @@ class AirHockeyRenderer(
     }
 
     private val tableBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#0D47A1")
+        val strokeColor = Color.parseColor("#0D47A1")
+        color = strokeColor
         style = Paint.Style.STROKE
         strokeWidth = 8f
+        setShadowLayer(15f, 0f, 0f, strokeColor)
     }
 
     private val centerLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#42A5F5")
+        val strokeColor = Color.parseColor("#42A5F5")
+        color = strokeColor
         style = Paint.Style.STROKE
         strokeWidth = 4f
+        setShadowLayer(12f, 0f, 0f, strokeColor)
     }
 
     private val centerCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#42A5F5")
+        val strokeColor = Color.parseColor("#42A5F5")
+        color = strokeColor
         style = Paint.Style.STROKE
         strokeWidth = 4f
+        setShadowLayer(12f, 0f, 0f, strokeColor)
     }
 
     private val goalPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#B71C1C")
+        val fillColor = Color.parseColor("#B71C1C")
+        color = fillColor
         style = Paint.Style.FILL
+        setShadowLayer(15f, 0f, 0f, fillColor)
     }
 
     private val puckPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#212121")
         style = Paint.Style.FILL
+        setShadowLayer(8f, 0f, 0f, Color.BLACK)
     }
 
     private val puckHighlightPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#424242")
+        val highlightColor = Color.parseColor("#424242")
+        color = highlightColor
         style = Paint.Style.FILL
+        setShadowLayer(10f, 0f, 0f, highlightColor)
     }
 
     private val paddle1Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#E53935")
+        val fillColor = Color.parseColor("#E53935")
+        color = fillColor
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, fillColor)
     }
 
     private val paddle2Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#43A047")
+        val fillColor = Color.parseColor("#43A047")
+        color = fillColor
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, fillColor)
     }
 
     private val paddleStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         style = Paint.Style.STROKE
         strokeWidth = 4f
+        setShadowLayer(10f, 0f, 0f, Color.WHITE)
     }
 
     private val paddleInnerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -87,19 +103,24 @@ class AirHockeyRenderer(
         textSize = 72f
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        setShadowLayer(10f, 0f, 0f, Color.WHITE)
     }
 
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#90CAF9")
+        val textColor = Color.parseColor("#90CAF9")
+        color = textColor
         textSize = 28f
         textAlign = Paint.Align.CENTER
+        setShadowLayer(8f, 0f, 0f, textColor)
     }
 
     private val goalTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#FFCDD2")
+        val textColor = Color.parseColor("#FFCDD2")
+        color = textColor
         textSize = 48f
         textAlign = Paint.Align.CENTER
         typeface = Typeface.DEFAULT_BOLD
+        setShadowLayer(20f, 0f, 0f, textColor)
     }
 
     // Reusable rect for efficiency
