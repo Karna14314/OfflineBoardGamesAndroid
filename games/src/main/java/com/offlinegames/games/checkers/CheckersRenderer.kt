@@ -41,6 +41,7 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
         color = Color.parseColor("#333333")
         style = Paint.Style.STROKE
         strokeWidth = 3f
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#333333"))
     }
 
     private val player2PiecePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -52,23 +53,27 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
         color = Color.parseColor("#FFFFFF")
         style = Paint.Style.STROKE
         strokeWidth = 3f
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#FFFFFF"))
     }
 
     private val kingCrownPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFD700") // Gold crown
         style = Paint.Style.FILL
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#FFD700"))
     }
 
     private val selectionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#7C83FD")
         style = Paint.Style.STROKE
         strokeWidth = 6f
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#7C83FD"))
     }
 
     private val validMovePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#4CAF50")
         style = Paint.Style.FILL
         alpha = 128
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#4CAF50"))
     }
 
     private val statusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -81,6 +86,8 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
     // State for highlighting
     private var selectedPosition: com.offlinegames.core.Position? = null
     private var validMoves: List<com.offlinegames.core.Position> = emptyList()
+
+    private val crownPath = android.graphics.Path()
 
     // ── BoardRenderer ───────────────────────────────────────────────────────
 
@@ -154,17 +161,17 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
 
     private fun drawCrown(canvas: Canvas, cx: Float, cy: Float, size: Float) {
         // Draw a simple crown shape (triangle with rounded top)
-        val path = android.graphics.Path()
         val halfSize = size * 0.6f
 
-        path.moveTo(cx - halfSize, cy + size * 0.3f)
-        path.lineTo(cx - halfSize * 0.5f, cy - size * 0.3f)
-        path.lineTo(cx, cy + size * 0.1f)
-        path.lineTo(cx + halfSize * 0.5f, cy - size * 0.3f)
-        path.lineTo(cx + halfSize, cy + size * 0.3f)
-        path.close()
+        crownPath.reset()
+        crownPath.moveTo(cx - halfSize, cy + size * 0.3f)
+        crownPath.lineTo(cx - halfSize * 0.5f, cy - size * 0.3f)
+        crownPath.lineTo(cx, cy + size * 0.1f)
+        crownPath.lineTo(cx + halfSize * 0.5f, cy - size * 0.3f)
+        crownPath.lineTo(cx + halfSize, cy + size * 0.3f)
+        crownPath.close()
 
-        canvas.drawPath(path, kingCrownPaint)
+        canvas.drawPath(crownPath, kingCrownPaint)
     }
 
     private fun drawStatus(canvas: Canvas, state: GameState) {
