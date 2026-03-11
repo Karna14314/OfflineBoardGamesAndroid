@@ -23,52 +23,57 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
     // ── Paint objects (allocated once, reused every frame) ─────────────────
 
     private val lightSquarePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#F0D9B5") // Light wood color
+        color = Color.parseColor("#2A2A35") // Darker background
         style = Paint.Style.FILL
     }
 
     private val darkSquarePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#B58863") // Dark wood color
+        color = Color.parseColor("#1A1A24") // Even darker background
         style = Paint.Style.FILL
     }
 
     private val player1PiecePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#FFFFFF") // White pieces
+        color = Color.parseColor("#FF4081") // Neon pink
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#FF4081"))
     }
 
     private val player1PieceStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#333333")
+        color = Color.parseColor("#FFFFFF") // White outline
         style = Paint.Style.STROKE
-        strokeWidth = 3f
+        strokeWidth = 4f
     }
 
     private val player2PiecePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#333333") // Black pieces
+        color = Color.parseColor("#00E5FF") // Neon blue
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#00E5FF"))
     }
 
     private val player2PieceStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#FFFFFF")
+        color = Color.parseColor("#FFFFFF") // White outline
         style = Paint.Style.STROKE
-        strokeWidth = 3f
+        strokeWidth = 4f
     }
 
     private val kingCrownPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFD700") // Gold crown
         style = Paint.Style.FILL
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#FFD700"))
     }
 
     private val selectionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#7C83FD")
+        color = Color.parseColor("#FFEA00") // Bright yellow
         style = Paint.Style.STROKE
         strokeWidth = 6f
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#FFEA00"))
     }
 
     private val validMovePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#4CAF50")
+        color = Color.parseColor("#00E676") // Bright green
         style = Paint.Style.FILL
         alpha = 128
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#00E676"))
     }
 
     private val statusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
