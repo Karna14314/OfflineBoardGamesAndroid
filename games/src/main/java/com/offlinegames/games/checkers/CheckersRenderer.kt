@@ -20,6 +20,8 @@ import com.offlinegames.engine.PieceRenderer
  */
 class CheckersRenderer : BoardRenderer, PieceRenderer {
 
+    private val sharedPath = android.graphics.Path()
+
     // ── Paint objects (allocated once, reused every frame) ─────────────────
 
     private val lightSquarePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -159,17 +161,17 @@ class CheckersRenderer : BoardRenderer, PieceRenderer {
 
     private fun drawCrown(canvas: Canvas, cx: Float, cy: Float, size: Float) {
         // Draw a simple crown shape (triangle with rounded top)
-        val path = android.graphics.Path()
+        sharedPath.reset()
         val halfSize = size * 0.6f
 
-        path.moveTo(cx - halfSize, cy + size * 0.3f)
-        path.lineTo(cx - halfSize * 0.5f, cy - size * 0.3f)
-        path.lineTo(cx, cy + size * 0.1f)
-        path.lineTo(cx + halfSize * 0.5f, cy - size * 0.3f)
-        path.lineTo(cx + halfSize, cy + size * 0.3f)
-        path.close()
+        sharedPath.moveTo(cx - halfSize, cy + size * 0.3f)
+        sharedPath.lineTo(cx - halfSize * 0.5f, cy - size * 0.3f)
+        sharedPath.lineTo(cx, cy + size * 0.1f)
+        sharedPath.lineTo(cx + halfSize * 0.5f, cy - size * 0.3f)
+        sharedPath.lineTo(cx + halfSize, cy + size * 0.3f)
+        sharedPath.close()
 
-        canvas.drawPath(path, kingCrownPaint)
+        canvas.drawPath(sharedPath, kingCrownPaint)
     }
 
     private fun drawStatus(canvas: Canvas, state: GameState) {

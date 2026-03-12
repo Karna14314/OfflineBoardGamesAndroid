@@ -20,6 +20,8 @@ import com.offlinegames.engine.PieceRenderer
  */
 class MinesweeperRenderer : BoardRenderer, PieceRenderer {
 
+    private val sharedPath = android.graphics.Path()
+
     // ── Paint objects (allocated once, reused every frame) ─────────────────
 
     private val gridPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -170,12 +172,12 @@ class MinesweeperRenderer : BoardRenderer, PieceRenderer {
         canvas.drawLine(cx, cy + size, cx, cy - size, polePaint)
 
         // Draw flag triangle
-        val path = android.graphics.Path()
-        path.moveTo(cx, cy - size)
-        path.lineTo(cx + size, cy - size * 0.3f)
-        path.lineTo(cx, cy + size * 0.2f)
-        path.close()
-        canvas.drawPath(path, flagPaint)
+        sharedPath.reset()
+        sharedPath.moveTo(cx, cy - size)
+        sharedPath.lineTo(cx + size, cy - size * 0.3f)
+        sharedPath.lineTo(cx, cy + size * 0.2f)
+        sharedPath.close()
+        canvas.drawPath(sharedPath, flagPaint)
 
         // Draw base
         canvas.drawRect(cx - size * 0.5f, cy + size, cx + size * 0.5f, cy + size + 5f, polePaint)
