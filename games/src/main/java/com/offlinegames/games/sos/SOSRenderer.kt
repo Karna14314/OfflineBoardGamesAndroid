@@ -21,6 +21,7 @@ class SOSRenderer : BoardRenderer, PieceRenderer {
         strokeWidth = 4f
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
+        setShadowLayer(10f, 0f, 0f, Color.parseColor("#7C83FD"))
     }
 
     private val sPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -28,6 +29,7 @@ class SOSRenderer : BoardRenderer, PieceRenderer {
         textSize = 64f
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#FF6B6B"))
     }
 
     private val oPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -35,6 +37,7 @@ class SOSRenderer : BoardRenderer, PieceRenderer {
         textSize = 64f
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#4FC3F7"))
     }
 
     private val statusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
