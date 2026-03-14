@@ -22,6 +22,7 @@ class DotsAndBoxesRenderer : BoardRenderer, PieceRenderer {
     private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         style = Paint.Style.FILL
+        setShadowLayer(8f, 0f, 0f, Color.WHITE)
     }
 
     private val edgePaint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -29,6 +30,7 @@ class DotsAndBoxesRenderer : BoardRenderer, PieceRenderer {
         strokeWidth = 8f
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
+        setShadowLayer(12f, 0f, 0f, Color.parseColor("#EF5350"))
     }
 
     private val edgePaint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -36,6 +38,7 @@ class DotsAndBoxesRenderer : BoardRenderer, PieceRenderer {
         strokeWidth = 8f
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
+        setShadowLayer(12f, 0f, 0f, Color.parseColor("#42A5F5"))
     }
 
     private val undrawnEdgePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

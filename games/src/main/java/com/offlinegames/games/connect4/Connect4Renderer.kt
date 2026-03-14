@@ -24,12 +24,14 @@ class Connect4Renderer : BoardRenderer, PieceRenderer {
     private val boardPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#1565C0")
         style = Paint.Style.FILL
+        setShadowLayer(15f, 0f, 0f, Color.parseColor("#1565C0"))
     }
 
     private val boardOutlinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#0D47A1")
         style = Paint.Style.STROKE
         strokeWidth = 3f
+        setShadowLayer(10f, 0f, 0f, Color.parseColor("#0D47A1"))
     }
 
     private val emptyPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -40,11 +42,13 @@ class Connect4Renderer : BoardRenderer, PieceRenderer {
     private val player1Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#EF5350")
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#EF5350"))
     }
 
     private val player2Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFEE58")
         style = Paint.Style.FILL
+        setShadowLayer(20f, 0f, 0f, Color.parseColor("#FFEE58"))
     }
 
     private val statusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
