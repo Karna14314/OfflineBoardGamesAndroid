@@ -86,7 +86,7 @@ class GameThread(
             val deltaNanos = frameStartNanos - lastFrameNanos
             lastFrameNanos = frameStartNanos
             // Cap to 3 frames to prevent spiral of death
-            val cappedNanos = deltaNanos.coerceAtMost(targetFrameNanos * 3L)
+            val cappedNanos = deltaNanos.coerceAtMost(targetFrameNanos * 3)
             val deltaSeconds = cappedNanos / 1_000_000_000f
 
             // Notify tick listeners (physics, animation, etc.)
