@@ -28,7 +28,7 @@ class GameThread(
 ) : Thread("GameRenderThread") {
 
     /** Target interval between frames (≈ 16.67 ms for 60 FPS). */
-    private val targetFrameMillis: Long = 1000L / 60L
+    private val targetFrameNanos: Long = 1_000_000_000L / 60L
 
     /** Cached background color to avoid parsing per frame */
     private val bgColor = android.graphics.Color.parseColor("#1A1A2E")
@@ -86,7 +86,7 @@ class GameThread(
             val deltaNanos = frameStartNanos - lastFrameNanos
             lastFrameNanos = frameStartNanos
             // Cap to 3 frames to prevent spiral of death
-            val cappedNanos = deltaNanos.coerceAtMost((targetFrameMillis * 3) * 1_000_000L)
+            val cappedNanos = deltaNanos.coerceAtMost(targetFrameNanos * 3)
             val deltaSeconds = cappedNanos / 1_000_000_000f
 
             // Notify tick listeners (physics, animation, etc.)
@@ -123,7 +123,7 @@ class GameThread(
 
     private fun sleepForRemainder(frameStartNanos: Long) {
         val elapsedNanos = System.nanoTime() - frameStartNanos
-        val remainingNanos = (targetFrameMillis * 1_000_000L) - elapsedNanos
+        val remainingNanos = targetFrameNanos - elapsedNanos
         if (remainingNanos > 0) {
             try {
                 val remainingMillis = remainingNanos / 1_000_000L
