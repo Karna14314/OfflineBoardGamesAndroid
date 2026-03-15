@@ -63,85 +63,60 @@ private class CheckersHeuristic(private val rules: CheckersRules) : HeuristicEva
         val myId = maximizingPlayer.id
         val opponentId = state.players.first { it.id != myId }.id
 
-        // Terminal positions
-        if (board.countPieces(myId) == 0) return -100000
-        if (board.countPieces(opponentId) == 0) return 100000
-        if (!board.hasLegalMoves(myId)) return -50000
-        if (!board.hasLegalMoves(opponentId)) return 50000
-
         var score = 0
+        var myCount = 0
+        var oppCount = 0
 
-        // Material count
-        score += evaluateMaterial(board, myId, opponentId)
-
-        // Position evaluation
-        score += evaluatePosition(board, myId, opponentId)
-
-        // Mobility
-        score += evaluateMobility(state, board, myId, opponentId)
-
-        return score
-    }
-
-    /**
-     * Evaluate material balance.
-     */
-    private fun evaluateMaterial(board: CheckersBoard, myId: Int, opponentId: Int): Int {
-        val myMen = board.getPlayerPieces(myId).count { !it.isKing }
-        val myKings = board.countKings(myId)
-        val oppMen = board.getPlayerPieces(opponentId).count { !it.isKing }
-        val oppKings = board.countKings(opponentId)
-
-        return (myMen * MAN_VALUE + myKings * KING_VALUE) -
-               (oppMen * MAN_VALUE + oppKings * KING_VALUE)
-    }
-
-    /**
-     * Evaluate positional factors.
-     */
-    private fun evaluatePosition(board: CheckersBoard, myId: Int, opponentId: Int): Int {
-        var score = 0
-
-        val myPieces = board.getPlayerPieces(myId)
-        val oppPieces = board.getPlayerPieces(opponentId)
-
-        // Advancement toward king row
-        for (piece in myPieces) {
-            if (!piece.isKing) {
-                // Player 1 advances toward row 7, Player 2 toward row 0
-                val advancement = if (myId == 1) piece.row else (7 - piece.row)
-                score += advancement * ADVANCEMENT_WEIGHT
-            }
-        }
-
-        for (piece in oppPieces) {
-            if (!piece.isKing) {
-                val advancement = if (opponentId == 1) piece.row else (7 - piece.row)
-                score -= advancement * ADVANCEMENT_WEIGHT
-            }
-        }
-
-        // Center control (pieces in center 4x4 are more valuable)
         val centerMin = 2
         val centerMax = 5
 
-        for (piece in myPieces) {
-            if (piece.row in centerMin..centerMax && piece.col in centerMin..centerMax) {
-                score += CENTER_CONTROL_WEIGHT
+        // Single O(N) pass to calculate material and positional scores without allocating new lists
+        for (i in 0 until board.pieces.size) {
+            val piece = board.pieces[i]
+            val isMyPiece = piece.playerId == myId
+
+            if (isMyPiece) {
+                myCount++
+                if (piece.isKing) {
+                    score += KING_VALUE
+                } else {
+                    score += MAN_VALUE
+                    val advancement = if (myId == 1) piece.row else (7 - piece.row)
+                    score += advancement * ADVANCEMENT_WEIGHT
+                }
+
+                if (piece.row in centerMin..centerMax && piece.col in centerMin..centerMax) {
+                    score += CENTER_CONTROL_WEIGHT
+                }
+
+                if (piece.row == 0 && myId == 1) score -= 10
+                if (piece.row == 7 && myId == 2) score -= 10
+            } else {
+                oppCount++
+                if (piece.isKing) {
+                    score -= KING_VALUE
+                } else {
+                    score -= MAN_VALUE
+                    val advancement = if (opponentId == 1) piece.row else (7 - piece.row)
+                    score -= advancement * ADVANCEMENT_WEIGHT
+                }
+
+                if (piece.row in centerMin..centerMax && piece.col in centerMin..centerMax) {
+                    score -= CENTER_CONTROL_WEIGHT
+                }
             }
         }
 
-        for (piece in oppPieces) {
-            if (piece.row in centerMin..centerMax && piece.col in centerMin..centerMax) {
-                score -= CENTER_CONTROL_WEIGHT
-            }
-        }
+        // Terminal positions based on pieces count
+        if (myCount == 0) return -100000
+        if (oppCount == 0) return 100000
 
-        // Penalize pieces on the back row (less mobile)
-        for (piece in myPieces) {
-            if (piece.row == 0 && myId == 1) score -= 10
-            if (piece.row == 7 && myId == 2) score -= 10
-        }
+        // Legal moves checks
+        if (!board.hasLegalMoves(myId)) return -50000
+        if (!board.hasLegalMoves(opponentId)) return 50000
+
+        // Mobility
+        score += evaluateMobility(state, board, myId, opponentId)
 
         return score
     }
@@ -180,7 +155,6 @@ class CheckersActionAI(private val difficulty: DifficultyProfile) {
      */
     fun selectAction(state: GameState, aiPlayer: Player): GameAction? {
         val board = state.boardData as CheckersBoard
-        val playerPieces = board.getPlayerPieces(aiPlayer.id)
 
         // Check for forced captures
         val captureMoves = rules.getAllCaptureMoves(board, aiPlayer.id)
